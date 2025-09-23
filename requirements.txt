@@ -1,0 +1,6 @@
+Flask
+pyTelegramBotAPI
+python-dotenv
+requests
+gunicorn
+pymongo
