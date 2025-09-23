@@ -4,3 +4,5 @@ python-dotenv
 requests
 gunicorn
 pymongo
+redis
+apscheduler
