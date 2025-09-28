@@ -255,7 +255,7 @@ def mark_user_verified(bot_id: str, group_id, user_id):
     _set(bot_id, "group_messages", group_messages)
 
     if not found_any:
-        return None, "No 𝕏 Link Found"
+        return None, None
     elif not x_usernames:
         return None, "𝕏 already verified"
     else:
