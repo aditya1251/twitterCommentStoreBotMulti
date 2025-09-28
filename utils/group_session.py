@@ -204,6 +204,12 @@ def store_group_message(bot, bot_id: str, message: Message, group_id, user_id, u
     _set(bot_id, "unique_x_usernames", unique_x_usernames)
 # ---------------- Group closing & verification ----------------
 def handle_close_group(bot, bot_id: str, message):
+
+    if not is_user_admin(bot, message.chat.id, message.from_user.id):
+        msg = bot.reply_to(message, "❌ Only admins can use this command.")
+        track_message(message.chat.id, msg.message_id, bot_id=bot_id)
+        return
+    
     gid = normalize_gid(message.chat.id)
     active_groups = _get(bot_id, "active_groups", {})
     active_groups[gid] = "closed"
@@ -223,6 +229,8 @@ def handle_close_group(bot, bot_id: str, message):
 
     try:
         msg = bot.send_video(message.chat.id, open("gifs/stop.mp4", "rb"))
+        msg2 = bot.send_message(message.chat.id, "Time line is getting updated wait few mins.")
+        track_message(message.chat.id, msg2.message_id, bot_id=bot_id)
         track_message(message.chat.id, msg.message_id, bot_id=bot_id)
     except Exception:
         pass
