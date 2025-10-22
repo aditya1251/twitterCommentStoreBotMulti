@@ -60,28 +60,55 @@ def handle_command(bot, bot_id: str, message, db):
             try:
                 help_text = (
                     "🤖 <b>Bot Help Menu</b>\n\n"
-                    "👤 <b>General Commands:</b>\n"
-                    "/s — Start the bot's link tracking\n"
-                    "/c — Send a close GIF\n"
-                    "/track — Turn on ad tracking\n"
-                    "/d [duration] — Set a deadline (e.g., /d 2h or /d 30m)\n"
-                    "/cd — Cancel the deadline\n"
+                    
+                    "👤 <b>General (Private Chat) Commands:</b>\n"
+                    "/start — Start the bot or reinitialize your session\n"
+                    "/help — Show this help menu\n"
+                    "/managegroups — Manage allowed groups (Admin only, private chat)\n\n"
+
+                    "👥 <b>Group Commands (For Everyone):</b>\n"
+                    "/rule — Show group rules\n"
+                    "/link — Submit your X (Twitter) link for tracking\n"
+                    "/ad or /all done — Mark your task as complete\n\n"
+
+                    "🛠️ <b>Admin-Only Group Commands:</b>\n"
+                    "/s or /start — Start tracking session in group\n"
+                    "/close or /c — Send closing GIF and end current phase\n"
+                    "/e or /end — End all tracking and clear data\n"
+                    "/verify or /track or /check — Enable verification phase (track 'ad', 'all done', etc.)\n"
+                    "/refresh_admins — Refresh the cached list of admins\n"
                     "/count — Show how many users have dropped links\n"
-                    "/remind — List users who have only dropped one link\n"
-                    "/unsafe — List users who have not finished their tasks\n"
-                    "/list — Show all active users\n"
-                    "/ad — Mark a user as complete\n"
-                    "/rad — Remove a user from the complete list\n"
-                    "/sr — Ask a user for a screen recording\n"
-                    "/srlist — List all users who need to send a screen recording\n"
-                    "/srm — Mark a user as safe\n"
-                    "/muteall — Mute all users who have not completed their tasks\n"
-                    "/summary — Show a summary of the session\n"
-                    "/e — End all tracking and clear all data\n\n"
-                    "🛠️ <b>Admin Panel:</b>\n"
-                    "/managegroups — Manage allowed groups (in private chat)"
+                    "/list — Show all users who submitted links\n"
+                    "/unsafe — List users who have not completed all done\n"
+                    "/muteunsafe [duration] — Mute all unsafe users for the given duration (e.g., /muteunsafe 2h)\n"
+                    "/muteall [duration] — Alias for /muteunsafe\n"
+                    "/remind — Remind users who dropped only one link\n"
+                    "/summary — Show a detailed summary of the current session\n"
+                    "/sr — Request a screen recording from a user\n"
+                    "/srlist — List all users who need to send screen recordings\n"
+                    "/srm — Mark a user as safe after reviewing SR\n"
+                    "/ad or /add_to_ad — Mark a user as completed\n"
+                    "/rad or /remove_from_ad — Remove a user from the completed list\n"
+                    "/d [duration] — Set a deadline (e.g., /d 1h, /d 30m, /d 2d)\n"
+                    "/cd — Cancel the current deadline\n"
+                    "/clear or /clean or /delete — Delete all tracked messages from the chat\n"
+                    "/rule — Display the group rules\n\n"
+
+                    "📊 <b>Session & Tracking Tools:</b>\n"
+                    "/summary — Get session summary\n"
+                    "/count — Count users with links\n"
+                    "/list — List all users and their links\n"
+                    "/unsafe — List unsafe (not done) users\n"
+                    "/remind — Show users who dropped only one link\n\n"
+
+                    "⚙️ <b>Utility Notes:</b>\n"
+                    "- Duration examples: <code>/muteunsafe 2h</code>, <code>/d 30m</code>, <code>/muteall 1d</code>\n"
+                    "- The bot must have permission to manage messages, mute users, and restrict members.\n\n"
+
+                    "👨‍💻 <b>Developer & Support:</b>\n"
+                    "If something doesn’t work, the developer will be notified automatically. 💬"
                 )
-                msg = bot.send_message(chat_id, help_text, parse_mode="HTML")
+                msg = bot.send_message(chat_id, help_text, parse_mode="HTML", disable_web_page_preview=True)
                 track_message(chat_id, msg.message_id, bot_id=bot_id)
             except Exception as e:
                 notify_dev(bot, e, "/help", message)
