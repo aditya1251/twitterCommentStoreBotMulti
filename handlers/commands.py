@@ -68,7 +68,7 @@ def handle_command(bot, bot_id: str, message, db):
 
                     "👥 <b>Group Commands (For Everyone):</b>\n"
                     "/rule — Show group rules\n"
-                    "/link — Submit your X (Twitter) link for tracking\n"
+                    "/link — To get a user link\n"
                     "/ad or /all done — Mark your task as complete\n\n"
 
                     "🛠️ <b>Admin-Only Group Commands:</b>\n"
